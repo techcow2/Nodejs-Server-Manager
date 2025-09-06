@@ -1,78 +1,70 @@
-# Node.js Server Manager
 
-A simple PowerShell script to easily find and manage Node.js servers running on your system. Useful for developers who frequently start and stop local web servers and need to clean up orphaned processes.
+
+# Node.js Server Manager
+A simple Python script to easily find and manage Node.js servers running on your system. Useful for developers who frequently start and stop local web servers and need to clean up orphaned processes.
 
 ## Features
-
-- 🔍 **Scan** for all running Node.js processes and their listening ports
+- 🔍 **Scan** for all running Node.js processes
 - 🎯 **Terminate** individual servers or all servers at once
 - 🔄 **Refresh** the server list to see current status
-- 🎨 **Color-coded** interface for better visibility
+- 🌍 **Cross-platform** support (Windows, Linux, macOS)
 - 📱 **Number-based menu** for easy navigation
 - 🧹 **Clean up** orphaned processes that don't appear in your terminal
 
 ## Why Use This?
-
 When developing with Node.js, you might frequently encounter situations where:
 - Servers continue running after closing the terminal
 - Multiple servers are running on different ports
 - You get port conflicts when starting new servers
-- You need to manually hunt down processes in Task Manager
+- You need to manually hunt down processes in Task Manager or Activity Monitor
 
 This tool solves these problems by providing a simple interface to manage all your Node.js servers in one place.
 
 ## Installation
-
-1. Download the `node_manager.ps1` script
+1. Download the `stop_node_servers.py` script
 2. (Optional) Place it in a directory that's in your PATH for easy access
-3. If you get execution policy errors, run PowerShell as Administrator and execute:
-   ```powershell
-   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-   ```
+3. Ensure you have Python 3.x installed on your system
 
 ## Usage
-
 1. Run the script:
-   ```powershell
-   .\node_manager.ps1
+   ```bash
+   python stop_node_servers.py
    ```
 2. Use the number-based menu:
-   - `0` - Refresh server list
-   - `1, 2, 3...` - Terminate individual servers
-   - `999` - Terminate all servers
-   - `9999` - Exit the program
+   - `1` - Terminate all Node.js processes
+   - `2` - Terminate specific processes (by PID)
+   - `3` - Exit the program
 
 ## Example Output
-
 ```
-=================================
-   Node.js Server Manager v1.0
-   Created by: github.com/techcow2
-=================================
+Node.js Process Terminator
+==========================
 
-Scanning for running Node.js servers...
+Found running Node.js processes:
+PID      Command
+--------------------------------------------------
+1234     node server.js
+5678     node /path/to/app.js --port=3000
 
-Found 2 Node.js server(s):
-1. node.exe (PID: 1234, Addresses: 0.0.0.0:3000, [::]:3000)
-2. node.exe (PID: 5678, Addresses: 0.0.0.0:3001, [::]:3001)
+Options:
+1. Terminate all processes
+2. Terminate specific processes (by PID)
+3. Cancel
 
-Menu Options:
-  0. Refresh server list
-  1. Terminate server 1 (PID: 1234)
-  2. Terminate server 2 (PID: 5678)
-  999. Terminate ALL servers
-  9999. Exit program
+Enter your choice (1-3): 2
+
+Enter PIDs to terminate (comma-separated): 1234
+
+Terminating selected processes...
+Terminated 1/1 processes successfully.
 ```
 
 ## Requirements
-
-- Windows PowerShell 5.1 or later
-- Administrator privileges (recommended for process termination)
+- Python 3.x
+- No external dependencies (uses only standard libraries)
 
 ## License
-
 MIT License - see LICENSE file for details
 
 ## Author
-
 Created by [techcow2](https://github.com/techcow2)
