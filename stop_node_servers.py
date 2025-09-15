@@ -42,9 +42,14 @@ def get_node_processes():
         return []
 
 def terminate_process(pid):
-    """Terminate a process by PID with graceful shutdown attempt."""
+    """Terminate a process by PID with graceful shutdown attempt, returning True if process is dead."""
     try:
         pid = int(pid)
+        
+        # Check if process is already dead
+        if not process_exists(pid):
+            return True
+        
         # Try graceful termination first
         if platform.system() == "Windows":
             subprocess.run(['taskkill', '/PID', str(pid)], 
@@ -55,16 +60,26 @@ def terminate_process(pid):
         # Wait for process to exit
         time.sleep(2)
         
-        # Check if still running and force kill if needed
-        if process_exists(pid):
-            if platform.system() == "Windows":
-                subprocess.run(['taskkill', '/F', '/PID', str(pid)], 
-                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            else:
-                os.kill(pid, signal.SIGKILL)
-            return False  # Required force kill
-        return True  # Graceful termination succeeded
+        # Check if dead after graceful termination
+        if not process_exists(pid):
+            return True
+        
+        # If still running, force kill
+        if platform.system() == "Windows":
+            subprocess.run(['taskkill', '/F', '/PID', str(pid)], 
+                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        else:
+            os.kill(pid, signal.SIGKILL)
+        
+        # Wait for force kill to take effect
+        time.sleep(1)
+        
+        # Final check if process is dead
+        return not process_exists(pid)
     except Exception as e:
+        # After exception, check if process is dead
+        if not process_exists(pid):
+            return True
         print(f"Error terminating process {pid}: {e}")
         return False
 
