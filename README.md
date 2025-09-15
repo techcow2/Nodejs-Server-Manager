@@ -1,5 +1,3 @@
-
-
 # Node.js Server Manager
 A simple Python script to easily find and manage Node.js servers running on your system. Useful for developers who frequently start and stop local web servers and need to clean up orphaned processes.
 
@@ -7,6 +5,7 @@ A simple Python script to easily find and manage Node.js servers running on your
 - 🔍 **Scan** for all running Node.js processes
 - 🎯 **Terminate** individual servers or all servers at once
 - 🔄 **Refresh** the server list to see current status
+- 📊 **Live Monitor** running Node.js servers in real-time with automatic updates and instant kill functionality
 - 🌍 **Cross-platform** support (Windows, Linux, macOS)
 - 📱 **Number-based menu** for easy navigation
 - 🧹 **Clean up** orphaned processes that don't appear in your terminal
@@ -33,13 +32,13 @@ This tool solves these problems by providing a simple interface to manage all yo
 2. Use the number-based menu:
    - `1` - Terminate all Node.js processes
    - `2` - Terminate specific processes (by PID)
-   - `3` - Exit the program
+   - `3` - Live monitor Node.js processes (real-time view with kill options)
+   - `4` - Exit the program
 
 ## Example Output
 ```
 Node.js Process Terminator
 ==========================
-
 Found running Node.js processes:
 PID      Command
 --------------------------------------------------
@@ -49,12 +48,11 @@ PID      Command
 Options:
 1. Terminate all processes
 2. Terminate specific processes (by PID)
-3. Cancel
+3. Live monitor processes
+4. Cancel
 
-Enter your choice (1-3): 2
-
+Enter your choice (1-4): 2
 Enter PIDs to terminate (comma-separated): 1234
-
 Terminating selected processes...
 Terminated 1/1 processes successfully.
 ```
